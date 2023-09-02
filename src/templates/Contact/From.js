@@ -7,13 +7,45 @@ const From = () => {
     const [stateTel,SetStateTel]=useState("")
     const [stateEmail,SetStateEmail]=useState("")
     const [stateText,SetStateText]=useState("")
+    const [stateFile,SetStateFile]=useState("")
+ 
 
-    function sendToServer(){
-        console.log(stateName)
-        console.log(stateFamily)
-        console.log(stateTel)
-        console.log(stateEmail)
-        console.log(stateText)
+    function step1(){
+
+        const reader = new FileReader();
+        reader.onloadend = () => {
+           
+           sendToServer(reader.result)
+            
+        };
+        reader.readAsDataURL(stateFile);
+    }
+
+
+
+    function sendToServer(file){
+             var myHeaders = new Headers();
+             myHeaders.append("Content-Type", "application/json");
+            
+            var raw = JSON.stringify({
+                "Name": stateName,
+                "Family": stateFamily,
+                "Email": stateEmail,
+                "Tel": stateTel,
+                "Text": stateText,
+                "File": file
+            });
+    
+            var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            };
+    
+            fetch("http://192.168.1.36:7000/insertContact/", requestOptions)
+            .then(response => response.text())
+            .then(result => console.log(result))
+            .catch(error => console.log('error', error));
     }
 
 
@@ -53,6 +85,15 @@ const From = () => {
                         </div>
                     </div>
 
+                    <div className="col-md-6">
+                        <div className="single-input-item">
+                            <label>
+                                <input type='file' onChange={e=>SetStateFile(e.target.files[0])}  />
+                            </label>
+                        </div>
+                    </div>
+
+
                     <div className="col-12">
                         <div className="single-input-item">
                             <label>
@@ -62,7 +103,7 @@ const From = () => {
 
                         <div className="single-input-item">
                             <label>
-                                <button onClick={sendToServer} className={`btn-outline  `}>ارسال پیام</button>
+                                <button onClick={step1} className={`btn-outline  `}>ارسال پیام</button>
 
                             </label>
                         </div>
