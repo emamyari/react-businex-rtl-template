@@ -1,11 +1,23 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import SectionTitle from '../UI/SectionTitle'
 import ServiceItem from  './ServiceItem'
-import ServicesData from '../../data/Services/services'
 
 import serviceTopBg from '../../assets/img/service/service-bg.jpg'
 
 function Services({classes}) {
+
+    const [sData,setSData]=useState([])
+
+    useEffect(() => {
+        fetch("http://192.168.1.36:7000/getServices/")
+        .then(response => response.json())
+        .then(result => setSData(result))
+        .catch(error => console.log('error', error));
+      },[]);
+
+
+
+
     return (
         <div className={`service-area-wrapper ${classes}`}>
             <div className="service-area-top" style={{backgroundImage: `url("${serviceTopBg}")`}}>
@@ -22,7 +34,7 @@ function Services({classes}) {
                 <div className="container">
                     <div className="row mtn-30">
                         {
-                            ServicesData.map(service=>(
+                            sData.map(service=>(
                                 <ServiceItem key={service.id} id={service.id} title={service.title} text={service.shortDesc} thumb={service.thumb}/>
                             ))
                         }
