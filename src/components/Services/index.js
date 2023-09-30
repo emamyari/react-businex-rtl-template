@@ -9,7 +9,7 @@ function Services({classes}) {
     const [sData,setSData]=useState([])
 
     useEffect(() => {
-        fetch("http://192.168.1.36:7000/getServices/")
+        fetch("http://192.168.1.3:7000/getServices/")
         .then(response => response.json())
         .then(result => setSData(result))
         .catch(error => console.log('error', error));

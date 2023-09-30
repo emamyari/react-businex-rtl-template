@@ -42,7 +42,7 @@ const From = () => {
             body: raw,
             };
     
-            fetch("http://192.168.1.36:7000/insertContact/", requestOptions)
+            fetch("http://192.168.1.3:7000/insertContact/", requestOptions)
             .then(response => response.text())
             .then(result => console.log(result))
             .catch(error => console.log('error', error));
