@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+{% load static %}
+
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+{% for i in data %}
+<tr>
+
+<p>این یک متن تستی است.</p>
+
+<td>
+    {{ i.JalaliDate }}
+</td>
+
+</tr>
+{% endfor %}
+ </body>
+</html>
